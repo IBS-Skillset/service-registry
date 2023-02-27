@@ -16,12 +16,10 @@ phases:
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME/service-registry
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-  build maven:
-    commands:
-      - echo Build maven
-      - mvn install
   build:
     commands:
+      - echo maven build
+      - mvn install
       - echo Build started on `date`
       - echo Building the Docker image...
       - echo $REPOSITORY_URI
