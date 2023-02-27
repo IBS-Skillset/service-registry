@@ -6,8 +6,6 @@ phases:
       java: corretto11
   pre_build:
     commands:
-      - echo maven build
-      - mvn install
       - echo Logging in to Amazon ECR...
       - echo $AWS_DEFAULT_REGION
       - echo $AWS_ACCOUNT_ID
