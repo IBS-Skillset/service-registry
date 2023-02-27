@@ -6,6 +6,8 @@ phases:
       java: corretto11
   pre_build:
     commands:
+      - echo maven build
+      - mvn install
       - echo Logging in to Amazon ECR...
       - echo $AWS_DEFAULT_REGION
       - echo $AWS_ACCOUNT_ID
@@ -18,8 +20,6 @@ phases:
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      - echo maven build
-      - mvn install
       - echo Build started on `date`
       - echo Building the Docker image...
       - echo $REPOSITORY_URI
