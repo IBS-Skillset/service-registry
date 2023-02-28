@@ -2,8 +2,6 @@ FROM public.ecr.aws/amazoncorretto/amazoncorretto:11
 
 WORKDIR /opt/app
 
-RUN mvn install
-
 COPY target/service-registry.jar /opt/app/service-registry.jar
 
 ENTRYPOINT ["/usr/bin/java"]
