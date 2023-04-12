@@ -6,7 +6,7 @@ phases:
       java: corretto11
     commands:
       - echo Installing app dependencies...
-      - curl.exe -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.7/2023-03-17/bin/windows/amd64/kubectl.exe
+      - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.25.7/2023-03-17/bin/windows/amd64/kubectl
       - chmod +x ./kubectl
       - echo 'Check kubectl version'
       - kubectl version --short --client
