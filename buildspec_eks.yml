@@ -22,6 +22,9 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME/service-registry
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
       - docker pull $REPOSITORY_URI:$IMAGE_TAG
 
 
@@ -41,3 +44,9 @@ phases:
       - kubectl apply -f deployment.yaml
       - kubectl apply -f service.yaml
       - kubectl rollout restart -f deployment.yaml
+      - printf '[{"name":"service-registry","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
+      - cat imageDefinitions.json
+
+artifacts:
+  files:
+    - imageDefinitions.json
