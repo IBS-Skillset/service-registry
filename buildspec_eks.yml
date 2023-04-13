@@ -25,28 +25,9 @@ phases:
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
-
-
-  build:
-    commands:
-      - echo Maven build
-      - mvn install
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker pull $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Push the latest image to cluster
       - kubectl apply -f deployment.yaml
       - kubectl apply -f service.yaml
-      - printf '[{"name":"service-registry","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
-      - cat imageDefinitions.json
-
-artifacts:
-  files:
-    - imageDefinitions.json
