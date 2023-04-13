@@ -14,7 +14,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon EKS...
-      - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $AWS_CLUSTER_NAME --role-arn arn:aws:sts::306472407007:assumed-role/ExpediaInstanceProfile/i-06abc7e92f43c017f
+      - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $AWS_CLUSTER_NAME --role-arn arn:aws:iam::306472407007:policy/IBS-Skillset-Happystays-ECR
       - echo check config
       - kubectl config view --minify
       - echo check kubectl access
