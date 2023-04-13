@@ -40,7 +40,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
       - gh auth login --hostname github.com --with-token <<< $SECRET_TOKEN
-      - gh clone repo https://github.com/IBS-Skillset/service-registry.git
+      - git clone https://github.com/IBS-Skillset/service-registry.git
       - git checkout -B main
       - cd ..
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
