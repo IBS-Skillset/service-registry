@@ -31,7 +31,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t service-registry:$IMAGE_TAG .
+      - docker build --t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
@@ -42,7 +42,6 @@ phases:
       - echo Push the latest image to cluster
       - kubectl apply -f deployment.yaml
       - kubectl apply -f service.yaml
-      - kubectl rollout restart -f deployment.yaml
       - printf '[{"name":"service-registry","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
       - cat imageDefinitions.json
 
