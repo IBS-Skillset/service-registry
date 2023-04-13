@@ -40,6 +40,8 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
       - gh auth login --hostname github.com --with-token <<< $SECRET_TOKEN
+      - git checkout -B main
+      - cd ..
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
