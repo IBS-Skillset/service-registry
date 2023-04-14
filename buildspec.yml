@@ -42,6 +42,7 @@ phases:
       - git config --global user.name $SECRET_USERNAME
       - git checkout -B test
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
+      - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
       - git push origin test
       - echo Writing image definitions file...
