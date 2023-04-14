@@ -35,11 +35,12 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
-      - git clone https://github.com/IBS-Skillset/service-registry.git
+      - git init
+      - git remote set-url origin https://github.com/IBS-Skillset/service-registry.git
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
-      - git init
       - git checkout -B main
+      - cd ..
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
