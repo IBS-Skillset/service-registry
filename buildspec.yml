@@ -41,6 +41,7 @@ phases:
       - git init
       - git checkout -B main
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
+      - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
       - git push origin main
       - echo Writing image definitions file...
