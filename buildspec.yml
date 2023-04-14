@@ -1,0 +1,53 @@
+version: 0.2
+env:
+  parameter-store:
+    SECRET_TOKEN: "MY_SECRET_TOKEN"
+    SECRET_USERNAME: "MY_SECRET_USERNAME"
+    SECRET_EMAIL: "MY_SECRET_EMAIL"
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo $AWS_DEFAULT_REGION
+      - echo $AWS_ACCOUNT_ID
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo $IMAGE_REPO_NAME
+      - aws --version
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME/service-registry
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Maven build
+      - mvn install
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - echo $REPOSITORY_URI
+      - docker build -t $REPOSITORY_URI:latest .
+      - echo Tagging Docker image...
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Setting up github connection..
+      - git init
+      - git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
+      - git config --global user.email $SECRET_EMAIL
+      - git config --global user.name $SECRET_USERNAME
+      - git checkout -B test
+      - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
+      - git add .
+      - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
+      - git push origin test
+      - echo Writing image definitions file...
+      - printf '[{"name":"service-registry","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
+      - cat imageDefinitions.json
+artifacts:
+  files:
+    - imageDefinitions.json

@@ -1,0 +1,18 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: service-registry
+
+eureka:
+  instance:
+    hostname: localhost
+    health-check-url-path: /actuator/health
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+
+endpoints:
+  shutdown:
+    enabled: true
