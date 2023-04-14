@@ -41,6 +41,8 @@ phases:
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
       - git checkout -B main
+      - git fetch --all
+      - git reset --hard origin/main
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$IMAGE_TAG"'@' deployment.yaml
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
