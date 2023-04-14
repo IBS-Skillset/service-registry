@@ -36,7 +36,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
       - git init
-      - git remote set-url origin https://github.com/IBS-Skillset/service-registry.git
+      - git remote add origin https://github.com/IBS-Skillset/service-registry.git
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
       - git checkout -B main
