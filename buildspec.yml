@@ -49,8 +49,9 @@ phases:
       - git reset --hard origin/main
       - NEWIMAGETAG=$REPOSITORY_URI:$IMAGE_TAG
       - /yq -i '.spec.template.spec.containers[0].image = $NEWIMAGETAG' deployment.yaml 
+      - echo $NEWIMAGETAG
       - git add .
-      - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
+      - git commit -m "Updating deployment yaml with updated version ${NEWIMAGETAG}"
       - git push origin main
       - echo Writing image definitions file...
       - printf '[{"name":"service-registry","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
