@@ -47,7 +47,7 @@ phases:
       - git checkout -B main
       - git fetch --all
       - git reset --hard origin/main
-      - /yq -i '(.spec | select(.template).template.spec.containers[] | select(.name == "service-registry").image) |= $REPOSITORY_URI:$IMAGE_TAG' deployment.yaml 
+      - /yq -i '.spec.template.spec.containers[0].image = "$REPOSITORY_URI:$IMAGE_TAG"' deployment.yaml 
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
       - git push origin main
