@@ -24,7 +24,7 @@ phases:
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME/service-registry
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - NEW_IMAGE_TAG=$REPOSITORY_URI:$IMAGE_TAG
+      - NEWIMAGETAG=$REPOSITORY_URI:$IMAGE_TAG
   build:
     commands:
       - echo Maven build
@@ -48,7 +48,7 @@ phases:
       - git checkout -B main
       - git fetch --all
       - git reset --hard origin/main
-      - /yq -i '.spec.template.spec.containers[0].image = $NEW_IMAGE_TAG' deployment.yaml 
+      - /yq -i '.spec.template.spec.containers[0].image = $NEWIMAGETAG' deployment.yaml 
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
       - git push origin main
