@@ -48,7 +48,7 @@ phases:
       - git fetch --all
       - git reset --hard origin/main
       - NEWIMAGETAG=$REPOSITORY_URI:$IMAGE_TAG
-      - /yq -i '.spec.template.spec.containers[0].image = \"$NEWIMAGETAG\"' deployment.yaml 
+      - /yq -i '.spec.template.spec.containers[0].image = "$NEWIMAGETAG"' deployment.yaml 
       - echo $NEWIMAGETAG
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${NEWIMAGETAG}"
