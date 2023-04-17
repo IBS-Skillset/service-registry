@@ -10,7 +10,8 @@ phases:
       java: corretto11
     commands:
       - wget https://github.com/mikefarah/yq/releases/download/v4.25.2/yq_linux_amd64 -O /yq
-      - chmod +x ./yq
+      - chmod +x /yq
+      - ./yq -V
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -46,7 +47,7 @@ phases:
       - git checkout -B main
       - git fetch --all
       - git reset --hard origin/main
-      - yq -i '(.spec | select(.template).template.spec.containers[] | select(.name == "service-registry").image) |= $REPOSITORY_URI:$IMAGE_TAG' deployment.yaml 
+      - ./yq -i '(.spec | select(.template).template.spec.containers[] | select(.name == "service-registry").image) |= $REPOSITORY_URI:$IMAGE_TAG' deployment.yaml 
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${IMAGE_TAG}"
       - git push origin main
