@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: service-registry
-          image: $NEWIMAGETAG
+          image: 306472407007.dkr.ecr.ap-south-1.amazonaws.com/ibs-skillset-happystays/service-registry:d2e1c7b
           imagePullPolicy: Always
           ports:
             - name: http
