@@ -28,6 +28,8 @@ phases:
 
   post_build:
     commands:
-      - status=$(kubectl apply -f deployment.yaml)
+      - status=$(kubectl apply -f deploy/deployment.yaml)
       - echo $status
-      - kubectl apply -f service.yaml
+      - kubectl apply -f deploy/service.yaml
+      - chmod +x notifications.sh
+      - ./notifications.sh
