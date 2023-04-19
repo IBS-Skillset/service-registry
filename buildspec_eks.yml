@@ -28,5 +28,6 @@ phases:
 
   post_build:
     commands:
-      - kubectl apply -f deployment.yaml
+      - status=$(kubectl apply -f deployment.yaml)
+      - echo $status
       - kubectl apply -f service.yaml
