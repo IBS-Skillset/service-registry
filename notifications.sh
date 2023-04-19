@@ -3,13 +3,12 @@ SLACK_CHANNEL=ibs-skillset-happystays
 
 app=service-registry
 send_notification() {
-  local color='good'
-  if [ "$status" == *"checked"* |  "$status" == *"unchanged"* ]; then
-    color='good'
+  if [[ "$status" == *"checked"* |  "$status" == *"unchanged"* ]]; then
+    echo "It's there."
   else
-    color = 'danger'
+    echo "It's not there."
   fi
-  local message="payload={\"channel\": \"#$SLACK_CHANNEL\",\"attachments\":[{\"pretext\":\"$1\",\"text\":\"$2\",\"color\":\"$color\"}]}"
+  local message="payload={\"channel\": \"#$SLACK_CHANNEL\",\"attachments\":[{\"pretext\":\"$1\",\"text\":\"$2\"}]}"
 
   curl -X POST --data-urlencode "$message" ${SLACK_WEBHOOK_URL}
 }
