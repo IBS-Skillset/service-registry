@@ -4,10 +4,9 @@ SLACK_CHANNEL=ibs-skillset-happystays
 app=service-registry
 send_notification() {
   local color='good'
-  local statusCheck = 'created'
-  if [ "$status" == *"$statusCheck"*  ]; then
+  if [ "$status" == *"checked"* |  "$status" == *"unchanged"* ]; then
     color='good'
-  else; then
+  else
     color = 'danger'
   fi
   local message="payload={\"channel\": \"#$SLACK_CHANNEL\",\"attachments\":[{\"pretext\":\"$1\",\"text\":\"$2\",\"color\":\"$color\"}]}"
