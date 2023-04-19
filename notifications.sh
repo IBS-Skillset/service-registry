@@ -3,7 +3,7 @@ SLACK_CHANNEL=ibs-skillset-happystays
 
 app=service-registry
 send_notification() {
-  if [[ "$status" == *"checked"* |  "$status" == *"unchanged"* ]]; then
+  if [ "$status" == *"checked"*] ||  ["$status" == *"unchanged"* ]; then
     echo "It's there."
   else
     echo "It's not there."
