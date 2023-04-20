@@ -1,4 +1,4 @@
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
 SLACK_CHANNEL=ibs-skillset-happystays
 
 app=service-registry
