@@ -1,5 +1,7 @@
 version: 0.2
-
+env:
+  parameter-store:
+    WEBHOOK_URL: "SLACK_WEBHOOK_URL"
 phases:
   install:
     runtime-versions:
