@@ -1,5 +1,5 @@
 SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
-SLACK_CHANNEL=ibs-skillset-happystays
+SLACK_CHANNEL=skillset
 
 app=service-registry
 send_notification() {
