@@ -1,6 +1,6 @@
 SLACK_CHANNEL=skillset
 
-app=service-registry
+APP_WITH_VERSION=service-registry:$IMAGE_TAG
 send_notification() {
   if [[ "$status" == *"checked"* || "$status" == *"unchanged"* ]]; then
     echo "It's there."
@@ -12,4 +12,4 @@ send_notification() {
   curl -X POST --data-urlencode "$message" "$WEBHOOK_URL"
 }
 
-send_notification "*[AWS][DEPLOYMENT]*" "Deployed application *$app*"
+send_notification "*[AWS][DEPLOYMENT]*" "Deployed application *$APP_WITH_VERSION*"
