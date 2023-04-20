@@ -41,7 +41,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
       - git init
-      - git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
+      - git remote set-url origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
       - git checkout -B main
