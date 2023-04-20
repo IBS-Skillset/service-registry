@@ -1,4 +1,4 @@
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
 SLACK_CHANNEL=skillset
 
 app=service-registry
