@@ -24,7 +24,6 @@ phases:
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME/service-registry
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - GITHUB_URI=https://github.com/IBS-Skillset/service-registry.git
   build:
     commands:
       - echo Maven build
@@ -44,7 +43,6 @@ phases:
       - git init
       - REMOTE=$(git remote -v)
       - echo $REMOTE
-      - echo $GITHUB_URI
       - |
         if [ -z "$REMOTE"]; then
            git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
