@@ -42,7 +42,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
       - git init
-      - export REMOTE=git remote -v
+      - REMOTE=$(git remote -v)
       - |
         if ["$REMOTE" == *"$GITHUB_URI"*]; then
           git remote set-url origin $GITHUB_URI
