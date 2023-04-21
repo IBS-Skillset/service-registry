@@ -43,6 +43,8 @@ phases:
       - echo Setting up github connection..
       - git init
       - REMOTE=$(git remote -v)
+      - echo $REMOTE
+      - echo $GITHUB_URI
       - |
         if [["$REMOTE" == *"$GITHUB_URI"*]]; then
           git remote set-url origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
