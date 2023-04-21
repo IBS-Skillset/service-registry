@@ -46,10 +46,10 @@ phases:
       - echo $REMOTE
       - echo $GITHUB_URI
       - |
-        if [["$REMOTE" == *"$GITHUB_URI"*]]; then
-          git remote set-url origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
+        if [ -z "$REMOTE"]; then
+           git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
         else
-          git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
+           git remote set-url origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
         fi
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
