@@ -43,12 +43,7 @@ phases:
       - git init
       - REMOTE=$(git remote -v)
       - echo $REMOTE
-      - |
-        if [ -z "$REMOTE"]; then
-           git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
-        else
-           git remote set-url origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
-        fi
+      - git remote add neworigin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
       - git checkout -B main
