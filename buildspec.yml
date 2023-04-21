@@ -44,7 +44,7 @@ phases:
       - git init
       - REMOTE=$(git remote -v)
       - |
-        if ["$REMOTE" == *"$GITHUB_URI"*]; then
+        if [["$REMOTE" == *"$GITHUB_URI"*]]; then
           git remote set-url origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
         else
           git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
