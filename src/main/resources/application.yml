@@ -7,7 +7,7 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: service-registry
     health-check-url-path: /actuator/health
   client:
     registerWithEureka: false

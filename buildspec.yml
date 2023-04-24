@@ -41,18 +41,20 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Setting up github connection..
       - git init
-      - git remote add origin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
+      - REMOTE=$(git remote -v)
+      - echo $REMOTE
+      - git remote add neworigin https://${SECRET_USERNAME}:${SECRET_TOKEN}@github.com/IBS-Skillset/service-registry.git
       - git config --global user.email $SECRET_EMAIL
       - git config --global user.name $SECRET_USERNAME
       - git checkout -B main
       - git fetch --all
-      - git reset --hard origin/main
+      - git reset --hard neworigin/main
       - export NEWIMAGETAG=$REPOSITORY_URI:$IMAGE_TAG
-      - /yq -i ".spec.template.spec.containers[0].image = \"$NEWIMAGETAG\"" deployment.yaml 
+      - /yq -i ".spec.template.spec.containers[0].image = \"$NEWIMAGETAG\"" deploy/deployment.yaml 
       - echo $NEWIMAGETAG
       - git add .
       - git commit -m "Updating deployment yaml with updated version ${NEWIMAGETAG}"
-      - git push origin main
+      - git push neworigin main
       - echo Writing image definitions file...
       - printf '[{"name":"service-registry","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
       - cat imageDefinitions.json
