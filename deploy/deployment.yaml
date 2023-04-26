@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: service-registry-api
-          image: 306472407007.dkr.ecr.ap-south-1.amazonaws.com/ibs-skillset-happystays/service-registry:642f8ba
+          image: 306472407007.dkr.ecr.ap-south-1.amazonaws.com/ibs-skillset-happystays/service-registry:847ac08
           imagePullPolicy: Always
           ports:
             - name: http
