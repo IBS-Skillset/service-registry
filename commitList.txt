@@ -1,4 +1,0 @@
-Commits in All repos
--------------------------
-config-server
-service-registry
