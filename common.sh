@@ -1,2 +1,0 @@
-declare -a repoList=("account-service" "api-gateway" "service-registry" "config-server" "oauth-server" "hotel-search-service" "hotel-book-service" "hotel-book-reprice-pad" "hotel-details-pad" "google-api" "hotel-availability-pad")
-length=${#repoList[@]}
